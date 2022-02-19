@@ -1,7 +1,10 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { advisorsData } from "../__data__/advisorsData";
+
 import AdvisorItem from "./AdvisorItem";
 import AdvisorSort from "./AdvisorSort";
+import Menu from "./Menu";
+import Header from "./Header";
 
 type Advisor = {
   id: number;
@@ -17,6 +20,7 @@ type Advisor = {
 const AdvisorsList = () => {
   const [advisors, setAdvisors] = useState<Advisor[]>();
   const [isLoading, setIsLoading] = useState(true);
+  const [menuIsVisible, setMenuIsVisible] = useState(false);
   let data = advisorsData.sort((a, b) => (a.lastName > b.lastName ? 1 : -1));
 
   useEffect(() => {
@@ -39,23 +43,32 @@ const AdvisorsList = () => {
 
   return (
     <section className="text-center">
-      <h1 className="text-3xl font-bold mb-6">Advisors</h1>
-      <AdvisorSort handleRadioChange={handleRadioChange} />
-      {isLoading && <h2>Loading...</h2>}
-      {advisors && (
-        <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-10/12 m-auto">
-          {advisors.map((advisor, index) => {
-            return (
-              <AdvisorItem
-                key={advisor.id}
-                index={index}
-                advisor={advisor}
-                data-testid={`advisor-item-${index}`}
-              />
-            );
-          })}
+      <Header
+        menuIsVisible={menuIsVisible}
+        setMenuIsVisible={setMenuIsVisible}
+      />
+      <div className="flex">
+        <div>
+          {isLoading && <h2>Loading...</h2>}
+          {advisors && (
+            <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-10/12 m-auto">
+              {advisors.map((advisor, index) => {
+                return (
+                  <AdvisorItem
+                    key={advisor.id}
+                    index={index}
+                    advisor={advisor}
+                    data-testid={`advisor-item-${index}`}
+                  />
+                );
+              })}
+            </div>
+          )}
         </div>
-      )}
+        <Menu menuIsVisible={menuIsVisible}>
+          <AdvisorSort handleRadioChange={handleRadioChange} />
+        </Menu>
+      </div>
     </section>
   );
 };

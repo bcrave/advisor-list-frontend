@@ -7,7 +7,7 @@ type Props = {
 const AdvisorSort = ({ handleRadioChange }: Props) => {
   return (
     <form>
-      <fieldset onChange={handleRadioChange}>
+      <fieldset onChange={handleRadioChange} className="flex flex-col">
         <label>
           <input
             type="radio"
