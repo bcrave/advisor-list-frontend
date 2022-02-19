@@ -1,4 +1,4 @@
-import AdvisorsList from "./components/AdvisorsListMobile";
+import AdvisorsList from "./components/AdvisorsList";
 
 const App = () => {
   return (

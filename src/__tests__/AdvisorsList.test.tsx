@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import AdvisorsList from "../components/AdvisorsListMobile";
+import AdvisorsList from "../components/AdvisorsList";
 
 describe("AdvisorsList", () => {
   it("fetches and renders an advisor div", async () => {
