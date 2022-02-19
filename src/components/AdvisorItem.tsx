@@ -26,20 +26,36 @@ const AdvisorItem = ({
   index,
 }: Props) => {
   return (
-    <div data-testid={`advisor-item-${index}`} className="flex w-8/12">
-      <img src={imageUrl} alt="profile" />
-      <div className="w-full flex justify-between">
-        <div>
-          <h3>
+    <div
+      data-testid={`advisor-item-${index}`}
+      className="px-2 py-6 bg-orange-100 rounded-2xl shadow-xl flex items-center"
+    >
+      <div className="flex flex-col justify-center items-center h-full">
+        <img
+          src={imageUrl}
+          alt="profile"
+          className="w-5/6 rounded-full mb-2 mr-4"
+        />
+        <p className="relative right-3 text-xs font-semibold">
+          {isOnline ? "🟢 Online" : "🔴 Offline"}
+        </p>
+      </div>
+      <div className="ml-2">
+        <div className="mb-4">
+          <h3 className="font-bold text-left text-lg">
             {firstName} {lastName}
           </h3>
-          <p>{isOnline ? "🟢 Online" : "🔴 Offline"}</p>
-        </div>
-        <div>
-          <p>{numOfReviews} reviews</p>
-          <p>
-            {firstName} Speaks: {languagesKnown.map((language) => language)}
+          <p className="text-left font-semibold text-sm text-gray-500">
+            {numOfReviews} reviews
           </p>
+        </div>
+        <div className="text-left">
+          <h4 className="font-semibold mb-1">{firstName} Speaks:</h4>
+          {languagesKnown.map((language) => (
+            <p className="text-left text-sm text-gray-500 bg-blue-200 inline-block mr-2 mb-1 py-0.5 px-2 rounded-lg">
+              {language}
+            </p>
+          ))}
         </div>
       </div>
     </div>

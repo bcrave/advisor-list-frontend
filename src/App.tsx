@@ -1,8 +1,8 @@
-import AdvisorsList from "./components/AdvisorsList";
+import AdvisorsList from "./components/AdvisorsListMobile";
 
 const App = () => {
   return (
-    <div className="flex flex-col justify-center">
+    <div className="bg-gray-200 py-6">
       <AdvisorsList />
     </div>
   );

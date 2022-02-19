@@ -17,9 +17,9 @@ const AdvisorsList = () => {
   const [advisors, setAdvisors] = useState<Advisor[]>(advisorsData);
 
   return (
-    <section>
-      <h1 className="text-3xl font-bold">Advisors</h1>
-      <div className="flex flex-col justify-center items-center">
+    <section className="text-center">
+      <h1 className="text-3xl font-bold mb-6">Advisors</h1>
+      <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-10/12 m-auto">
         {advisors.map((advisor, index) => {
           return (
             <AdvisorItem

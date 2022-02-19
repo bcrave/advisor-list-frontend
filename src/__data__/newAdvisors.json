@@ -1,4 +1,4 @@
-const data = [
+
   {
     id: 1,
     first_name: "Gerik",
@@ -1000,18 +1000,3 @@ const data = [
     image_url: "http://dummyimage.com/493x490.png/dddddd/000000",
   },
 ];
-
-export const advisorsData = data.map((advisor, index) => {
-  return {
-    id: advisor.id,
-    firstName: advisor.first_name,
-    lastName: advisor.last_name,
-    gender: advisor.gender,
-    isOnline: advisor.isOnline,
-    languagesKnown: advisor.languages_known,
-    numOfReviews: advisor.num_of_reviews,
-    imageUrl: `https://randomuser.me/api/portraits/${
-      advisor.gender === "Male" ? "men" : "women"
-    }/${index}.jpg`,
-  };
-});
