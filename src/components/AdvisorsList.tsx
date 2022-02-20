@@ -2,7 +2,7 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { advisorsData } from "../__data__/advisorsData";
 
 import AdvisorItem from "./AdvisorItem";
-import AdvisorSort from "./AdvisorSort";
+import OnlineOfflineFilter from "./OnlineOfflineFilter";
 import Menu from "./Menu";
 import Header from "./Header";
 
@@ -47,7 +47,10 @@ const AdvisorsList = () => {
         menuIsVisible={menuIsVisible}
         setMenuIsVisible={setMenuIsVisible}
       />
-      <div className="flex">
+      <div className="flex flex-col">
+        <Menu menuIsVisible={menuIsVisible}>
+          <OnlineOfflineFilter handleRadioChange={handleRadioChange} />
+        </Menu>
         <div>
           {isLoading && <h2>Loading...</h2>}
           {advisors && (
@@ -65,9 +68,6 @@ const AdvisorsList = () => {
             </div>
           )}
         </div>
-        <Menu menuIsVisible={menuIsVisible}>
-          <AdvisorSort handleRadioChange={handleRadioChange} />
-        </Menu>
       </div>
     </section>
   );

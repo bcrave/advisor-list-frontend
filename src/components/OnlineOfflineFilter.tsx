@@ -4,7 +4,7 @@ type Props = {
   handleRadioChange: (e: FormEvent) => void;
 };
 
-const AdvisorSort = ({ handleRadioChange }: Props) => {
+const OnlineOfflineFilter = ({ handleRadioChange }: Props) => {
   return (
     <form>
       <fieldset onChange={handleRadioChange} className="flex flex-col">
@@ -30,4 +30,4 @@ const AdvisorSort = ({ handleRadioChange }: Props) => {
   );
 };
 
-export default AdvisorSort;
+export default OnlineOfflineFilter;

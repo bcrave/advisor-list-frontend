@@ -8,7 +8,9 @@ const Menu = ({ children, menuIsVisible }: Props) => {
     <div
       className={`${
         menuIsVisible ? "" : "hidden"
-      } absolute right-0 w-1/2 h-full md:block bg-gray-500`}
+      } right-0 w-full md:block bg-gray-300
+        mb-6
+      `}
     >
       {children}
     </div>
