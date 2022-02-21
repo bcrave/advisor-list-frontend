@@ -45,7 +45,7 @@ const data = [
     last_name: "Ringsell",
     gender: "Female",
     isOnline: false,
-    languages_known: ["Dzongkha", "Thai", "Fijian", "Russian"],
+    languages_known: ["Irish Gaelic", "Thai", "Fijian", "Russian"],
     num_of_reviews: 325,
     image_url: "http://dummyimage.com/541x559.png/ff4444/ffffff",
   },

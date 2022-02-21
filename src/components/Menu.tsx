@@ -1,5 +1,5 @@
 type Props = {
-  children: JSX.Element;
+  children: JSX.Element | JSX.Element[];
   menuIsVisible: boolean;
 };
 
@@ -9,7 +9,7 @@ const Menu = ({ children, menuIsVisible }: Props) => {
       className={`${
         menuIsVisible ? "" : "hidden"
       } right-0 w-full md:block bg-gray-300
-        mb-6
+        mb-6 flex justify-evenly p-4
       `}
     >
       {children}

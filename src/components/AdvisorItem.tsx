@@ -28,7 +28,7 @@ const AdvisorItem = ({
   return (
     <div
       data-testid={`advisor-item-${index}`}
-      className="px-2 py-6 bg-orange-100 rounded-2xl shadow-xl flex items-center"
+      className="px-2 py-6 bg-white rounded-2xl shadow-xl flex items-center"
     >
       <div className="flex flex-col justify-center items-center h-full">
         <img
