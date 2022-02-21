@@ -1,10 +1,11 @@
-import { FormEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { advisorsData } from "../__data__/advisorsData";
 
 import AdvisorItem from "./AdvisorItem";
-import OnlineOfflineFilter from "./OnlineOfflineFilter";
-import Menu from "./Menu";
+import FilterByLanguage from "./FilterByLanguage";
+import FilterByStatus from "./FilterByStatus";
 import Header from "./Header";
+import Menu from "./Menu";
 
 type Advisor = {
   id: number;
@@ -18,8 +19,11 @@ type Advisor = {
 };
 
 const AdvisorsList = () => {
-  const [advisors, setAdvisors] = useState<Advisor[]>();
-  const [language, setLanguage] = useState("");
+  const [advisors, setAdvisors] = useState<Advisor[]>([]);
+  const [advisorsByOnlineStatus, setAdvisorsByOnlineStatus] = useState<
+    Advisor[]
+  >([]);
+  const [languageSearchTerm, setLanguageSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [menuIsVisible, setMenuIsVisible] = useState(false);
 
@@ -30,40 +34,39 @@ const AdvisorsList = () => {
     setIsLoading(false);
   }, []);
 
-  const handleChange = (e: FormEvent) => {
-    let filtered = filterByOnlineStatus(e);
-    const filteredByLanguage = filterByLanguage(e, filtered);
+  const handleLanguageChange = (e: ChangeEvent) => {
+    const { value } = e.target as HTMLInputElement;
+    const arrayToFilter =
+      advisorsByOnlineStatus.length !== 0 ? advisorsByOnlineStatus : data;
+    const filteredByOnlineStatus = filterByLanguage(arrayToFilter, value);
+    setLanguageSearchTerm(value);
+    setAdvisors(filteredByOnlineStatus);
+  };
+
+  const handleOnlineStatusChange = (e: FormEvent) => {
+    const { id } = e.target as HTMLInputElement;
+    let filteredByStatus: Advisor[];
+    if (id === "hide-offline") {
+      filteredByStatus = data.filter((advisor) => advisor.isOnline);
+    } else if (id === "hide-online") {
+      filteredByStatus = data.filter((advisor) => !advisor.isOnline);
+    } else {
+      filteredByStatus = data;
+    }
+    const filteredByLanguage = filterByLanguage(
+      filteredByStatus,
+      languageSearchTerm
+    );
+    setAdvisorsByOnlineStatus(filteredByStatus);
     setAdvisors(filteredByLanguage);
   };
 
-  const filterByLanguage = (e: FormEvent, array: Advisor[]) => {
-    const { value } = e.target as HTMLInputElement;
-    if (value === "") return array;
-    const filteredAdvisors = array.filter((advisor) => {
-      return advisor.languagesKnown.some((string) => string.includes(language));
+  const filterByLanguage = (array: Advisor[], languageSearchTerm: string) => {
+    return array.filter((advisor) => {
+      return advisor.languagesKnown.some((language) =>
+        language.toLowerCase().includes(languageSearchTerm.toLowerCase())
+      );
     });
-    return filteredAdvisors;
-  };
-
-  const filterByOnlineStatus = (e: FormEvent) => {
-    const { id } = e.target as HTMLInputElement;
-    if (id === "hide-offline") {
-      const advisorsOnline = data.filter((advisor) => advisor.isOnline);
-      return advisorsOnline;
-    } else if (id === "hide-online") {
-      const advisorsOffline = data.filter((advisor) => !advisor.isOnline);
-      return advisorsOffline;
-    }
-    return data;
-  };
-
-  const handleLanguageChange = (e: FormEvent) => {
-    const { value } = e.target as HTMLInputElement;
-    const filteredAdvisors = data.filter((advisor) =>
-      advisor.languagesKnown.some((string) => string.includes(value))
-    );
-    setLanguage(value);
-    return filteredAdvisors;
   };
 
   return (
@@ -74,11 +77,8 @@ const AdvisorsList = () => {
       />
       <div className="flex flex-col">
         <Menu menuIsVisible={menuIsVisible}>
-          <OnlineOfflineFilter
-            handleChange={handleChange}
-            handleRadioChange={filterByOnlineStatus}
-            handleLanguageChange={handleLanguageChange}
-          />
+          <FilterByStatus handleOnlineStatusChange={handleOnlineStatusChange} />
+          <FilterByLanguage handleLanguageChange={handleLanguageChange} />
         </Menu>
         <div>
           {isLoading && <h2>Loading...</h2>}

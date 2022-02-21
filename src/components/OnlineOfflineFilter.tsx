@@ -1,10 +1,6 @@
 import { ChangeEvent, FormEvent, useRef, useState } from "react";
 
-type Props = {
-  handleChange: (e: FormEvent) => void;
-  handleRadioChange: (e: FormEvent) => void;
-  handleLanguageChange: (e: ChangeEvent) => void;
-};
+type Props = {};
 
 const radioOptions = [
   { id: "show-all", content: "All" },
@@ -12,11 +8,7 @@ const radioOptions = [
   { id: "hide-online", content: "Offline" },
 ];
 
-const OnlineOfflineFilter = ({
-  handleChange,
-  handleRadioChange,
-  handleLanguageChange,
-}: Props) => {
+const OnlineOfflineFilter = ({}: Props) => {
   const radioRefs = useRef<HTMLInputElement[]>([]);
 
   const addToRefs = (element: HTMLInputElement) => {
@@ -27,7 +19,6 @@ const OnlineOfflineFilter = ({
   return (
     <form
       onChange={(e: FormEvent) => {
-        handleChange(e);
         console.log(radioRefs);
       }}
     >
@@ -56,11 +47,7 @@ const OnlineOfflineFilter = ({
           </div>
         ))}
       </fieldset>
-      <input
-        type="text"
-        placeholder="Filter by language..."
-        onChange={handleLanguageChange}
-      />
+      <input type="text" placeholder="Filter by language..." />
     </form>
   );
 };
