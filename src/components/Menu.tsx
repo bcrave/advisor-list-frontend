@@ -8,11 +8,9 @@ const Menu = ({ children, menuIsVisible }: Props) => {
     <div
       className={`${
         menuIsVisible ? "" : "hidden"
-      } right-0 w-full md:block bg-gray-300
-        mb-6 flex justify-evenly p-4
-      `}
+      } md:block bg-gray-300 mb-6 p-4`}
     >
-      {children}
+      <div className="md:w-1/2 m-auto">{children}</div>
     </div>
   );
 };

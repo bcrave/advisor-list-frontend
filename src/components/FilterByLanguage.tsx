@@ -11,7 +11,7 @@ const FilterByLanguage = ({ handleLanguageChange }: Props) => {
         type="text"
         placeholder="Filter by language..."
         onChange={handleLanguageChange}
-        className="w-full md:w-2/3 h-8 p-4 rounded-lg outline-none"
+        className="w-full h-8 p-4 rounded-lg outline-none"
       />
     </div>
   );

@@ -6,6 +6,7 @@ import FilterByLanguage from "./FilterByLanguage";
 import FilterByStatus from "./FilterByStatus";
 import Header from "./Header";
 import Menu from "./Menu";
+import SortByReviews from "./SortByReviews";
 
 type Advisor = {
   id: number;
@@ -24,6 +25,7 @@ const AdvisorsList = () => {
     Advisor[]
   >([]);
   const [languageSearchTerm, setLanguageSearchTerm] = useState("");
+  const [reviewsAreAscending, setReviewsAreAscending] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [menuIsVisible, setMenuIsVisible] = useState(false);
 
@@ -39,8 +41,9 @@ const AdvisorsList = () => {
     const arrayToFilter =
       advisorsByOnlineStatus.length !== 0 ? advisorsByOnlineStatus : data;
     const filteredByOnlineStatus = filterByLanguage(arrayToFilter, value);
+    const sorted = sortByReviewsOrder(filteredByOnlineStatus);
     setLanguageSearchTerm(value);
-    setAdvisors(filteredByOnlineStatus);
+    setAdvisors(sorted);
   };
 
   const handleOnlineStatusChange = (e: FormEvent) => {
@@ -57,8 +60,24 @@ const AdvisorsList = () => {
       filteredByStatus,
       languageSearchTerm
     );
+    const sorted = sortByReviewsOrder(filteredByLanguage);
     setAdvisorsByOnlineStatus(filteredByStatus);
-    setAdvisors(filteredByLanguage);
+    setAdvisors(sorted);
+  };
+
+  const handleSortOptionChange = (e: ChangeEvent) => {
+    const { value } = e.target as HTMLInputElement;
+    const advisorsCopy = advisors.map((advisor) => advisor);
+
+    if (value === "ascending") {
+      advisorsCopy.sort((a, b) => (a.numOfReviews > b.numOfReviews ? 1 : -1));
+      setReviewsAreAscending(true);
+      setAdvisors(advisorsCopy);
+    } else if (value === "descending") {
+      advisorsCopy.sort((a, b) => (a.numOfReviews < b.numOfReviews ? 1 : -1));
+      setReviewsAreAscending(false);
+      setAdvisors(advisorsCopy);
+    }
   };
 
   const filterByLanguage = (array: Advisor[], languageSearchTerm: string) => {
@@ -69,6 +88,14 @@ const AdvisorsList = () => {
     });
   };
 
+  const sortByReviewsOrder = (array: Advisor[]) => {
+    if (reviewsAreAscending) {
+      return array.sort((a, b) => (a.numOfReviews > b.numOfReviews ? 1 : -1));
+    } else {
+      return array.sort((a, b) => (a.numOfReviews < b.numOfReviews ? 1 : -1));
+    }
+  };
+
   return (
     <section className="text-center">
       <Header
@@ -77,7 +104,12 @@ const AdvisorsList = () => {
       />
       <div className="flex flex-col">
         <Menu menuIsVisible={menuIsVisible}>
-          <FilterByStatus handleOnlineStatusChange={handleOnlineStatusChange} />
+          <div className="flex flex-col md:flex-row justify-between items-center mb-6">
+            <FilterByStatus
+              handleOnlineStatusChange={handleOnlineStatusChange}
+            />
+            <SortByReviews handleSortOptionChange={handleSortOptionChange} />
+          </div>
           <FilterByLanguage handleLanguageChange={handleLanguageChange} />
         </Menu>
         <div>
@@ -95,6 +127,11 @@ const AdvisorsList = () => {
                 );
               })}
             </div>
+          )}
+          {advisors.length === 0 && (
+            <p>
+              We don't seem to have anyone who knows {languageSearchTerm} :(
+            </p>
           )}
         </div>
       </div>

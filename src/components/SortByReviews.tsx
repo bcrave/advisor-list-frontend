@@ -1,10 +1,22 @@
-type Props = {};
+import { ChangeEvent } from "react";
 
-const SortByReviews = ({}: Props) => {
+type Props = {
+  handleSortOptionChange: (e: ChangeEvent) => void;
+};
+
+const SortByReviews = ({ handleSortOptionChange }: Props) => {
   return (
-    <select>
-      <option value="1">1</option>
-      <option value="2">2</option>
+    <select
+      name="sort-options"
+      id="sort-options"
+      onChange={handleSortOptionChange}
+      className="h-6 px-4 rounded-md outline-none bg-gray-100 text-gray-600"
+    >
+      <option disabled selected>
+        Sort by Reviews
+      </option>
+      <option value="descending">Reviews: Highest to Lowest</option>
+      <option value="ascending">Reviews: Lowest to Highest</option>
     </select>
   );
 };
