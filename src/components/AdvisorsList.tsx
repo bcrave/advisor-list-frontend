@@ -1,6 +1,5 @@
 import axios from "axios";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { advisorsData } from "../__data__/advisorsData";
 
 import AdvisorItem from "./AdvisorItem";
 import FilterByLanguage from "./FilterByLanguage";
@@ -22,6 +21,7 @@ type Advisor = {
 };
 
 const AdvisorsList = () => {
+  const [data, setData] = useState<Advisor[]>([]);
   const [advisors, setAdvisors] = useState<Advisor[]>([]);
   const [advisorsByOnlineStatus, setAdvisorsByOnlineStatus] = useState<
     Advisor[]
@@ -31,11 +31,11 @@ const AdvisorsList = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [menuIsVisible, setMenuIsVisible] = useState(false);
 
-  let data = advisorsData.sort((a, b) => (a.lastName > b.lastName ? 1 : -1));
-
   useEffect(() => {
     const fetchAdvisors = async () => {
       const { data } = await axios.get("http://localhost:5000/");
+      data.sort((a: Advisor, b: Advisor) => (a.lastName > b.lastName ? 1 : -1));
+      setData(data);
       setAdvisors(data);
       setIsLoading(false);
     };
