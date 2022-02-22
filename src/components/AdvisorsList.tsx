@@ -1,3 +1,4 @@
+import axios from "axios";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { advisorsData } from "../__data__/advisorsData";
 
@@ -7,6 +8,7 @@ import FilterByStatus from "./FilterByStatus";
 import Header from "./Header";
 import Menu from "./Menu";
 import SortByReviews from "./SortByReviews";
+import SkeletonProfile from "../skeletons/SkeletonProfile";
 
 type Advisor = {
   id: number;
@@ -32,8 +34,13 @@ const AdvisorsList = () => {
   let data = advisorsData.sort((a, b) => (a.lastName > b.lastName ? 1 : -1));
 
   useEffect(() => {
-    setAdvisors(data);
-    setIsLoading(false);
+    const fetchAdvisors = async () => {
+      const { data } = await axios.get("http://localhost:5000/");
+      setAdvisors(data);
+      setIsLoading(false);
+    };
+
+    fetchAdvisors();
   }, []);
 
   const handleLanguageChange = (e: ChangeEvent) => {
@@ -113,7 +120,10 @@ const AdvisorsList = () => {
           <FilterByLanguage handleLanguageChange={handleLanguageChange} />
         </Menu>
         <div>
-          {isLoading && <h2>Loading...</h2>}
+          {isLoading &&
+            [1, 2, 3, 4, 5, 6].map((n) => (
+              <SkeletonProfile key={n} theme="light" />
+            ))}
           {advisors && (
             <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-10/12 m-auto">
               {advisors.map((advisor, index) => {
@@ -128,7 +138,7 @@ const AdvisorsList = () => {
               })}
             </div>
           )}
-          {advisors.length === 0 && (
+          {advisors.length === 0 && languageSearchTerm !== "" && (
             <p>
               We don't seem to have anyone who knows {languageSearchTerm} :(
             </p>

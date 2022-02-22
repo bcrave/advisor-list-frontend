@@ -15,8 +15,8 @@ const SortByReviews = ({ handleSortOptionChange }: Props) => {
       <option disabled selected>
         Sort by Reviews
       </option>
-      <option value="descending">Reviews: Highest to Lowest</option>
       <option value="ascending">Reviews: Lowest to Highest</option>
+      <option value="descending">Reviews: Highest to Lowest</option>
     </select>
   );
 };
