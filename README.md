@@ -1,46 +1,15 @@
-# Getting Started with Create React App
+# Advisor List Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## About this Project
+This project was made to help me practice my skills in data filtering, `React` with `TypeScript`, and `Tailwind CSS`.  The biggest challenge of this project was figuring out how to store the various states, so that certain filters persisted even after new ones were applied.  If I were to refactor this, I would probably try using the `useReducer` hook to manage the state, as it actually is much more complicated than I had thought it would be when I started.  I decided to stick with `useState`, as it's what I'm more familiar with, and the app is small enough that my state management didn't get out of control.
 
-## Available Scripts
+Using TypeScript is a joy as always.  I love how it documents itself as you use it. Just follow the errors and you learn how it's suppose to work.  I also think Tailwind is the future of styling components.  It looks rather verbose at first glance, but it was really easy to use, and a lot more enjoyable than switching between files and trying to remember which class names you used where.  It also encourages DRY code, because you don't want to be repeating style groups a lot.  Then again, that is the point of React, and for that reason Tailwind is a great companion to it.
 
-In the project directory, you can run:
+## How to Use
+To run this app on your local machine, you'll need both this repository, as well as the backend [advisor-list-backend](https://github.com/bcrave/advisor-list-backend).
 
-### `npm start`
+- Clone this repo and enter the project
+- Run `npm install` to get all the necessary dependencies.
+- Run `npm run start` to run the app on default port `3000`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+If no data is loading, make sure your [backend](https://github.com/bcrave/advisor-list-backend) is running.
