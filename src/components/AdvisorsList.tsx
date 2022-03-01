@@ -27,7 +27,9 @@ const AdvisorsList = () => {
     Advisor[]
   >([]);
   const [languageSearchTerm, setLanguageSearchTerm] = useState("");
-  const [reviewsAreAscending, setReviewsAreAscending] = useState(true);
+  const [reviewsAreAscending, setReviewsAreAscending] = useState<Boolean | any>(
+    null
+  );
   const [isLoading, setIsLoading] = useState(true);
   const [menuIsVisible, setMenuIsVisible] = useState(false);
 
@@ -96,7 +98,9 @@ const AdvisorsList = () => {
   };
 
   const sortByReviewsOrder = (array: Advisor[]) => {
-    if (reviewsAreAscending) {
+    if (reviewsAreAscending === null) {
+      return array;
+    } else if (reviewsAreAscending) {
       return array.sort((a, b) => (a.numOfReviews > b.numOfReviews ? 1 : -1));
     } else {
       return array.sort((a, b) => (a.numOfReviews < b.numOfReviews ? 1 : -1));

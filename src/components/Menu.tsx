@@ -10,7 +10,7 @@ const Menu = ({ children, menuIsVisible }: Props) => {
         menuIsVisible ? "" : "hidden"
       } md:block bg-gray-300 mb-6 p-4`}
     >
-      <div className="md:w-1/2 m-auto">{children}</div>
+      <div className="md:w-2/3 lg:w-1/2 m-auto">{children}</div>
     </div>
   );
 };
