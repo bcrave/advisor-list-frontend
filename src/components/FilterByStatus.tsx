@@ -1,5 +1,5 @@
 import { FormEvent } from "react";
-import { ACTIONS } from "./AdvisorsList";
+import { ACTIONS } from "../helpers/advisorsReducer";
 
 type Props = {
   dispatch: ({ type, payload }: { type: string; payload: any }) => void;
