@@ -51,8 +51,11 @@ const AdvisorItem = ({
         </div>
         <div className="text-left">
           <h4 className="font-semibold mb-1">{firstName} Speaks:</h4>
-          {languagesKnown.map((language) => (
-            <p className="text-left text-sm text-gray-500 bg-blue-200 inline-block mr-2 mb-1 py-0.5 px-2 rounded-lg">
+          {languagesKnown.map((language, idx) => (
+            <p
+              className="text-left text-sm text-gray-500 bg-blue-200 inline-block mr-2 mb-1 py-0.5 px-2 rounded-lg"
+              key={idx}
+            >
               {language}
             </p>
           ))}

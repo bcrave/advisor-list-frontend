@@ -1,16 +1,19 @@
 import { ChangeEvent } from "react";
+import { ACTIONS } from "./AdvisorsList";
 
 type Props = {
-  handleLanguageChange: (e: ChangeEvent) => void;
+  dispatch: ({ type, payload }: { type: string; payload: any }) => void;
 };
 
-const FilterByLanguage = ({ handleLanguageChange }: Props) => {
+const FilterByLanguage = ({ dispatch }: Props) => {
   return (
     <div>
       <input
         type="text"
         placeholder="Filter by language..."
-        onChange={handleLanguageChange}
+        onChange={(event) =>
+          dispatch({ type: ACTIONS.FILTER_BY_LANGUAGE, payload: { event } })
+        }
         className="w-full h-8 p-4 rounded-lg outline-none bg-gray-100 text-gray-600"
       />
     </div>
