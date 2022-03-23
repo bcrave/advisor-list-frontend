@@ -16,6 +16,11 @@ const initialState: AdvisorState = {
   advisorsByOnlineStatus: [],
   reviewsAreAscending: null,
   languageSearchTerm: "",
+  onlineStatuses: {
+    showAll: true,
+    hideOnline: false,
+    hideOffline: false,
+  },
 };
 
 export type AdvisorState = {
@@ -24,6 +29,11 @@ export type AdvisorState = {
   advisorsByOnlineStatus: Advisor[];
   reviewsAreAscending: Boolean | null;
   languageSearchTerm: string;
+  onlineStatuses: {
+    showAll: Boolean;
+    hideOnline: Boolean;
+    hideOffline: Boolean;
+  };
 };
 
 export type Advisor = {

@@ -41,19 +41,40 @@ export const advisorsReducer = (
       } else return state;
 
     case ACTIONS.FILTER_BY_ONLINE_STATUS:
-      let filteredByStatus: Advisor[];
+      let filteredByOnlineStatus: Advisor[];
       if (payload.event.target.id === "hide-offline") {
-        filteredByStatus = state.data.filter((advisor) => advisor.isOnline);
+        state.onlineStatuses = {
+          showAll: false,
+          hideOnline: false,
+          hideOffline: true,
+        };
+        filteredByOnlineStatus = filterByOnlineStatus(
+          state.data.map((advisor) => advisor),
+          state.onlineStatuses
+        );
       } else if (payload.event.target.id === "hide-online") {
-        filteredByStatus = state.data.filter((advisor) => !advisor.isOnline);
+        state.onlineStatuses = {
+          showAll: false,
+          hideOnline: true,
+          hideOffline: false,
+        };
+        filteredByOnlineStatus = filterByOnlineStatus(
+          state.data.map((advisor) => advisor),
+          state.onlineStatuses
+        );
       } else {
-        filteredByStatus = state.data;
+        state.onlineStatuses = {
+          showAll: true,
+          hideOnline: false,
+          hideOffline: false,
+        };
+        filteredByOnlineStatus = state.data;
       }
-      let onlineStatusFilteredByLanguage = filterByLanguage(
-        filteredByStatus,
+      const onlineStatusFilteredByLanguage = filterByLanguage(
+        filteredByOnlineStatus,
         state.languageSearchTerm
       );
-      let onlineStatusSorted = sortByReviewsOrder(
+      const onlineStatusSorted = sortByReviewsOrder(
         onlineStatusFilteredByLanguage,
         state.reviewsAreAscending
       );
@@ -64,16 +85,16 @@ export const advisorsReducer = (
       };
 
     case ACTIONS.FILTER_BY_LANGUAGE:
-      const arrayToFilter =
-        state.advisorsByOnlineStatus.length !== 0
-          ? state.advisorsByOnlineStatus.map((advisor) => advisor)
-          : state.data.map((advisor) => advisor);
-      const filteredByLanguage = filterByLanguage(
-        arrayToFilter,
+      const filteredByLanguage: Advisor[] = filterByLanguage(
+        state.data.map((advisor) => advisor),
         payload.event.target.value
       );
-      const sorted = sortByReviewsOrder(
+      const filteredByLanguageAndStatus: Advisor[] = filterByOnlineStatus(
         filteredByLanguage,
+        state.onlineStatuses
+      );
+      const sorted = sortByReviewsOrder(
+        filteredByLanguageAndStatus,
         state.reviewsAreAscending
       );
       return {
@@ -84,6 +105,20 @@ export const advisorsReducer = (
     default:
       return state;
   }
+};
+
+const filterByOnlineStatus = (
+  array: Advisor[],
+  onlineStatuses: {
+    showAll: Boolean;
+    hideOnline: Boolean;
+    hideOffline: Boolean;
+  }
+) => {
+  if (onlineStatuses.showAll) return array;
+  if (onlineStatuses.hideOnline)
+    return array.filter((advisor) => !advisor.isOnline);
+  return array.filter((advisor) => advisor.isOnline);
 };
 
 const filterByLanguage = (array: Advisor[], languageSearchTerm: string) => {
